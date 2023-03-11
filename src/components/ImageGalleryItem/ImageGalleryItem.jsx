@@ -1,5 +1,5 @@
 export const ImageGalleryItem = ({ images }) => {
-    console.log(images)
+    // console.log(images)
     
   return (
     <>
