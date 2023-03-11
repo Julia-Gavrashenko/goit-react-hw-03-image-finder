@@ -5,7 +5,7 @@ export const ImageGalleryItem = ({ images }) => {
     <>
       {images.map(({ id, webformatURL, tags }) => (
         <li key={id}>
-          <image src={webformatURL} alt={tags} width="300"/>
+          <img src={webformatURL} alt={tags} width="300"/>
         </li>
       ))}
     </>

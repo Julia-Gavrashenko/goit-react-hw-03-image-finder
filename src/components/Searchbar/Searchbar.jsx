@@ -13,7 +13,7 @@ export class Searchbar extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    if (this.state.inputQuery.trim().replaceAll(/\s+/g, '+') === '') {
+    if (this.state.inputQuery.trim() === '') {
       toast('Please, enter something to search');
       return;
     }
@@ -26,14 +26,13 @@ export class Searchbar extends Component {
     return (
       <header>
         <form onSubmit={this.handleSubmit}>
-          <button type="submit" class="button">
+          <button type="submit">
             <span>Search</span>
           </button>
 
           <input
             type="text"
-            autocomplete="off"
-            autofocus
+           
             placeholder="Search images and photos"
             value={this.state.inputQuery}
             onChange={this.handleInputChange}
@@ -43,3 +42,6 @@ export class Searchbar extends Component {
     );
   }
 }
+
+
+// .replaceAll(/\s+/g, '+')
