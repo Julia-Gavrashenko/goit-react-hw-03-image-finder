@@ -10,35 +10,27 @@ export class Searchbar extends Component {
     this.setState({ inputQuery: event.currentTarget.value.toLowerCase() });
   };
 
-
-
   handleSubmit = event => {
     event.preventDefault();
 
     if (this.state.inputQuery.trim() === '') {
-        
-
-     toast('Please, enter something to search');
-      return 
+      toast('Please, enter something to search');
+      return;
     }
 
     this.props.onSubmit(this.state.inputQuery);
     this.setState({ inputQuery: '' });
   };
 
-
-
-
   render() {
     return (
-      <header class="searchbar">
-        <form class="form" onSubmit={this.handleSubmit}>
+      <header>
+        <form onSubmit={this.handleSubmit}>
           <button type="submit" class="button">
-            <span class="button-label">Search</span>
+            <span>Search</span>
           </button>
 
           <input
-            class="input"
             type="text"
             autocomplete="off"
             autofocus
