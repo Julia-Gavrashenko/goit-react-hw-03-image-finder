@@ -13,7 +13,7 @@ export class Searchbar extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    if (this.state.inputQuery.trim() === '') {
+    if (this.state.inputQuery.trim().replaceAll(/\s+/g, '+') === '') {
       toast('Please, enter something to search');
       return;
     }

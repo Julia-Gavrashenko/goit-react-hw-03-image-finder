@@ -28,7 +28,7 @@ export class App extends Component {
         `https://pixabay.com/api/?q=${this.state.inputQuery}&page=1&key=33084667-f5fdd61fd2318acf30785d2ee&image_type=photo&orientation=horizontal&per_page=12`
       )
         .then(response => response.json())
-        .then(fetchResult => this.setState({ fetchResult }))
+        .then(data => this.setState({ fetchResult: data.hits }))
         .finally(() => this.setState({ loading: false }));
     }
   }
