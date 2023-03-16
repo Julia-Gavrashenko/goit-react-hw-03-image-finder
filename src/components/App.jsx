@@ -1,8 +1,10 @@
 import { Component } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { Button } from './Button/Button';
+import { GlobalStyle } from './GlobalStyle';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Loader } from './Loader/Loader';
+import { Modal } from './Modal/Modal';
 import { Searchbar } from './Searchbar/Searchbar';
 import { fetchImages } from './service/api';
 
@@ -15,6 +17,8 @@ export class App extends Component {
     loading: false,
     outOfImg: false,
     error: null,
+    showModal: false,
+    url: '',
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -34,10 +38,10 @@ export class App extends Component {
             });
           }
 
-          this.setState({
+          this.setState(prevState => ({
             fetchResult: [...prevState.fetchResult, ...data.hits],
             totalHits: data.totalHits,
-          });
+          }));
         })
         .catch(error => this.setState({ error, outOfImg: true }))
         .finally(() => this.setState({ loading: false }));
@@ -53,6 +57,7 @@ export class App extends Component {
       loading: false,
       outOfImg: false,
       error: null,
+      url: '',
     });
   };
 
@@ -60,12 +65,28 @@ export class App extends Component {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
+  toggleModal = url => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+      url: url,
+    }));
+  };
+
   render() {
-    const { loading, fetchResult, error, inputQuery, outOfImg, totalHits } =
-      this.state;
+    const {
+      loading,
+      fetchResult,
+      error,
+      inputQuery,
+      outOfImg,
+      totalHits,
+      showModal,
+      url,
+    } = this.state;
 
     return (
       <>
+        <GlobalStyle />
         <div>
           <Searchbar onSubmit={this.handleFormSubmit} />
 
@@ -75,19 +96,20 @@ export class App extends Component {
             </div>
           )}
 
-          {/* {loading && <div>Loading...</div>} */}
- {loading && <Loader visible={loading} />}
+          {loading && <Loader visible={loading} />}
 
-
-          {outOfImg && (
-            <div textAlign="center">
-              Sorry. There are no {inputQuery} images
-            </div>
-          )}
+          {outOfImg && <div>Sorry. There are no {inputQuery} images</div>}
 
           {error && <h1>{error.message}</h1>}
 
-          {fetchResult && <ImageGallery images={this.state.fetchResult} />}
+          {fetchResult && (
+            <ImageGallery
+              images={this.state.fetchResult}
+              onModal={this.toggleModal}
+            />
+          )}
+
+          {showModal && <Modal onClose={this.toggleModal} url={url} />}
 
           <Toaster />
         </div>
@@ -99,3 +121,7 @@ export class App extends Component {
     );
   }
 }
+
+// toggleModal = () => {
+//   this.setState(prevState => ({ showModal: !prevState.showModal,  }));
+// };
