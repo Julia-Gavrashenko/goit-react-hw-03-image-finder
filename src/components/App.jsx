@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { Toaster } from 'react-hot-toast';
+import { StyledApp, Message } from './App.styled';
 import { Button } from './Button/Button';
 import { GlobalStyle } from './GlobalStyle';
 import { ImageGallery } from './ImageGallery/ImageGallery';
@@ -68,7 +69,7 @@ export class App extends Component {
   toggleModal = url => {
     this.setState(({ showModal }) => ({
       showModal: !showModal,
-      url: url,
+      url,
     }));
   };
 
@@ -87,18 +88,20 @@ export class App extends Component {
     return (
       <>
         <GlobalStyle />
-        <div>
+        <StyledApp>
           <Searchbar onSubmit={this.handleFormSubmit} />
 
           {!inputQuery && (
-            <div>
-              Your images will be here. Please, enter something to search
-            </div>
+            <Message>
+              Your images will be here. Enter something to search!
+            </Message>
           )}
 
           {loading && <Loader visible={loading} />}
 
-          {outOfImg && <div>Sorry. There are no {inputQuery} images</div>}
+          {outOfImg && (
+            <Message>Sorry. There are no {inputQuery} images</Message>
+          )}
 
           {error && <h1>{error.message}</h1>}
 
@@ -111,8 +114,16 @@ export class App extends Component {
 
           {showModal && <Modal onClose={this.toggleModal} url={url} />}
 
-          <Toaster />
-        </div>
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              style: {
+                border: '3px solid pink',
+              },
+              duration: 2000,
+            }}
+          />
+        </StyledApp>
 
         {fetchResult.length > 0 && fetchResult.length < totalHits && (
           <Button onClick={this.onLoadMoreClick}>Load More</Button>
@@ -121,7 +132,3 @@ export class App extends Component {
     );
   }
 }
-
-// toggleModal = () => {
-//   this.setState(prevState => ({ showModal: !prevState.showModal,  }));
-// };

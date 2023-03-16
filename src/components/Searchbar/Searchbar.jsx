@@ -1,8 +1,8 @@
-
 import PropTypes from 'prop-types';
 import { Component } from 'react';
+import { BsSearch } from 'react-icons/bs';
 import { toast } from 'react-hot-toast';
-
+import { Header, SearchForm, SearchButton, Input } from './Searchbar.styled';
 
 export class Searchbar extends Component {
   state = {
@@ -27,27 +27,24 @@ export class Searchbar extends Component {
 
   render() {
     return (
-      <header>
-        <form onSubmit={this.handleSubmit}>
-          <button type="submit">
-            <span>Search</span>
-          </button>
+      <Header>
+        <SearchForm onSubmit={this.handleSubmit}>
+          <SearchButton type="submit">
+            <BsSearch />
+          </SearchButton>
 
-          <input
+          <Input
             type="text"
-           
             placeholder="Search images and photos"
             value={this.state.inputQuery}
             onChange={this.handleInputChange}
           />
-        </form>
-      </header>
+        </SearchForm>
+      </Header>
     );
   }
 }
 
-Searchbar.propTypes =  {
- onSubmit: PropTypes.func.isRequired,
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
 };
-
-
