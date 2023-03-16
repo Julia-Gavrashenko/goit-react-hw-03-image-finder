@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Toaster, toast } from 'react-hot-toast';
+import { Toaster} from 'react-hot-toast';
 import { Button } from './Button/Button';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Searchbar } from './Searchbar/Searchbar';
@@ -66,7 +66,7 @@ export class App extends Component {
   };
 
   render() {
-    const { loading, fetchResult, error, totalHits, inputQuery, outOfImg } =
+    const { loading, fetchResult, error, inputQuery, outOfImg } =
       this.state;
 
     return (
